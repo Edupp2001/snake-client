@@ -13,14 +13,13 @@
 using namespace std;
 void drawfield(SOCKET sock) {
 	generate();
-	
-	while (1) {
+	int n = 1;
+	while (n != -1) {
 		char buf[2000];
 		memset(buf, 0, 2000);
-		recv(sock, buf, 2000, 0);
+		n = recv(sock, buf, 2000, 0);
 		string data = buf;
-		cout << data;
-		//system("pause");
+		
 		int c = 0;
 		while (c < data.size()) {
 			for (int i = 0; i < field.size(); ++i) {
