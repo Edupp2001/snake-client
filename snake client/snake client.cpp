@@ -38,7 +38,11 @@ void drawfield(SOCKET sock) {
 	}
 }
 int main() {
-	SOCKET sockk = createclient();
+	string ip = "";
+	cout << "enter your server ip or 0 to use default: " << endl;
+	cin >> ip;
+	system("cls");
+	SOCKET sockk = createclient(ip);
 	thread mainthr(drawfield, sockk);
 	mainthr.detach();
 	while (1) {

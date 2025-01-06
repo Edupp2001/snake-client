@@ -5,7 +5,11 @@
 using namespace std;
 WSADATA wsd;
 
-SOCKET createclient(string ip = "192.168.1.240") {
+SOCKET createclient(string ip) {
+	if (ip == "0")
+		ip = "127.0.0.1";
+	else if (ip == "max")
+		ip = "192.168.1.240";
 	WSADATA wsd;
 	if (FAILED(WSAStartup(MAKEWORD(2, 2), &wsd)))
 		//Инициализация Winsock, функция WSAStartupиспользуется для указания под версии интерфейса Winsoсk
@@ -18,7 +22,7 @@ SOCKET createclient(string ip = "192.168.1.240") {
 	sockaddr_in addr; //Создаем и заполняем переменную для хранения адреса
 	addr.sin_family = AF_INET; //Семейство адресов, которые будет обрабатывать наш сервер, у нас это TCP/IP адреса
 	addr.sin_port = htons(3128); //Используем функцию htons для перевода номера порта в TCP/IP представление
-	addr.sin_addr.s_addr = inet_addr("192.168.1.240");
+	addr.sin_addr.s_addr = inet_addr(ip.c_str());
 	if (SOCKET_ERROR == connect(sockk, (struct sockaddr*)&addr, sizeof(addr))) //Связываем сокет с адресом
 		cout << "Error with binding socket";
 	return sockk;
